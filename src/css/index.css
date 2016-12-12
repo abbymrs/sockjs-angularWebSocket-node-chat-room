@@ -1,0 +1,28 @@
+.container {
+    margin-top: 100px;
+    width: 800px;
+}
+
+.chat-wrap {
+    box-shadow: 1px 3px 10px rgba(0, 0, 0, .3);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.content {
+    min-height: 200px;
+    padding: 10px;
+}
+
+.chat-input {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.chat-input .text {
+    width: 600px;
+    padding: 7px;
+    outline:none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
