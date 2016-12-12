@@ -1,7 +1,7 @@
 angular.module('myApp', [
     'service.sock'
 ])
-    .controller('mainCtrl', function ($scope, $websocket, $interval, sockService) {
+    .controller('mainCtrl', function ($scope, $interval, sockService) {
         let value = null;
         let btn = document.querySelector('.btn');
         let input = document.querySelector('.text');
@@ -10,28 +10,29 @@ angular.module('myApp', [
             sockService.deferred.then(res => {
                 $scope.data = res;
                 let div = document.createElement('div');
-                div.innerHTML = res.splice(res.length - 1, 1);
-                content.appendChild(div);
+                let text = res.splice(res.length - 1, 1);
+                if (text.length > 0) {
+                    div.innerHTML = text;
+                    content.appendChild(div);
+                }
                 input.onkeyup = (e) => {
-                    let value = input.value;
                     if (e.keyCode == 13) {
-
-                        sockService.ws.send(value);
-                        div.innerHTML = res;
-                        content.appendChild(div);
-                        input.value = '';
-
+                        appendContent(input, div, content, res);
                     }
                 };
                 btn.onclick = () => {
-                    let div = document.createElement('div');
-                    div.innerHTML = value;
-                    content.appendChild(div)
-                    sockService.ws.send(input.value);
-                    input.value = '';
-                    console.log('send');
-                }
-            })
+                    appendContent(input, div, content, res);
+                };
+            });
         }, 1000);
+
+        function appendContent(input, div, content, res) {
+            sockService.ws.send(input.value);
+            if (res.length > 0) {
+                div.innerHTML = res;
+                content.appendChild(div);
+            }
+            input.value = '';
+        }
 
     })

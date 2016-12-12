@@ -20,11 +20,11 @@ let sock = sockjs.createServer();
 sock.on('connection',conn=>{
     connections.push(conn);
     let number = connections.length;
-    conn.write('welcome user: ' + number);
+    conn.write('welcome user ' + number);
     conn.on('data',msg=>{
         console.log(msg);
         for(let i=0;i<connections.length;i++){
-            connections[i].write('user ' + number + 'says: ' + msg);
+            connections[i].write('user ' + number + ' says: ' + msg);
         }
     });
     conn.on('close',()=>{
