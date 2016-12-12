@@ -14,6 +14,12 @@
     padding: 10px;
 }
 
+.content > div {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px dashed #ddd;
+}
+
 .chat-input {
     padding: 10px;
     border-top: 1px solid #ddd;
@@ -22,7 +28,7 @@
 .chat-input .text {
     width: 600px;
     padding: 7px;
-    outline:none;
+    outline: none;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
