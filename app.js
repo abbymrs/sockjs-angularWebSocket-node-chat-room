@@ -28,11 +28,17 @@ sock.on('connection', conn => {
 
         if (msg.name) {
             users[number - 1] = msg.name;
-            console.log(users);
+            // console.log(users);
             conn.write('welcome ' + users[number - 1]);
         } else {
             for (let i = 0; i < connections.length; i++) {
-                connections[i].write(users[number - 1] + ' says: ' + msg.value);
+                let data = {
+                    user: users[number - 1],
+                    content: msg.value,
+                    time: new Date().toTimeString()
+                };
+                // console.log(data);
+                connections[i].write(JSON.stringify(data));
             }
         }
 
