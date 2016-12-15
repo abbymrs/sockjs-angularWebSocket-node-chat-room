@@ -9,18 +9,18 @@
 </head>
 <body ng-app="myApp" ng-controller="mainCtrl">
     <div class="container">
-        <div class="chat-wrap">
-            <div class="content"></div>
-        <div class="chat-input">
-            <input type="text" class="text">
-            <input type="button" value="发送" class="btn btn-primary">
+        <div class="login" ng-show="!isHide">
+            <input type="text" name="username" id="username" placeholder="pls enter your name">
+            <a ui-sref="home" ng-click="login()" class="btn primary-btn a-btn">
+                Login
+            </a>
         </div>
-        </div>
+        <div ui-view ng-show="isHide"></div>
     </div>
 </body>
 
 <script src="/angular/angular.min.js"></script>
-<!--<script src="/angular-ui-router/release/angular-ui-router.js"></script>-->
+<script src="/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="http://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <script src="/angular-websocket/dist/angular-websocket.js"></script>
 <script src="/js/index.js"></script>
