@@ -1,6 +1,19 @@
+.clearfix{
+    zoom:1;
+}
+.clearfix::after{
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+    overflow: hidden;
+}
+.fl{
+    float: left;
+}
 .container {
     margin-top: 100px;
-    width: 800px;
+    /*width: 800px;*/
 }
 
 .chat-wrap {
@@ -10,8 +23,7 @@
 }
 
 .content {
-    min-height: 200px;
-    max-height: 400px;
+    height: 400px;
     overflow: auto;
     padding: 20px;
 }
@@ -56,4 +68,15 @@
 .time{
     font-size: 13px;
     margin-left: 5px;
+}
+.online-users{
+    list-style: none;
+    max-height: 450px;
+    overflow: auto;
+    margin-left: 50px;
+    padding: 0 40px;
+}
+.online-users li{
+    height: 30px;
+    line-height: 30px;
 }

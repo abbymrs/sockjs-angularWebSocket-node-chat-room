@@ -8,7 +8,8 @@ angular.module('service.sock', [
 
         var ws = $websocket(wsUrl);
         ws.onMessage(function (message) {
-            result.push(message.data);
+            // console.log(JSON.parse(message.data));
+            result.push(JSON.parse(message.data));
             // console.log(result);
             deferred.resolve(result);
         });

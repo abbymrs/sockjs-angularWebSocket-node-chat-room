@@ -25,28 +25,42 @@ sock.on('connection', conn => {
     users.push(number);
     conn.on('data', msg => {
         msg = JSON.parse(msg);
-
-        if (msg.name) {
+        if (msg.name) {  
+            let newUser;
             users[number - 1] = msg.name;
+            newUser = users[number - 1];
             // console.log(users);
-            conn.write('welcome ' + users[number - 1]);
+            let data = {
+                welcomeMsg: newUser + ' is online',
+                users: users
+            };
+            for (let i = 0; i < connections.length; i++) {
+                connections[i].write(JSON.stringify(data));
+            }
         } else {
             for (let i = 0; i < connections.length; i++) {
                 let data = {
                     user: users[number - 1],
                     content: msg.value,
-                    time: new Date().toTimeString()
+                    time: new Date().toTimeString(),
+                    users: users
                 };
-                // console.log(data);
                 connections[i].write(JSON.stringify(data));
             }
         }
 
     });
     conn.on('close', () => {
+        user = users.splice(number-1,1);
         for (let i = 0; i < connections.length; i++) {
-            connections[i].write('user' + number + ' disconnected!');
+            let data = {
+                disconnectMsg:user[0] + ' is disconnected!',
+                time: new Date().toTimeString(),
+                users: users
+            };
+            connections[i].write(JSON.stringify(data));
         }
+        connections.splice(number-1,1);
     });
     conn.on('error', (e) => {
         console.log(e);

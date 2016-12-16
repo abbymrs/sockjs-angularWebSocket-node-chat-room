@@ -10,16 +10,24 @@ angular.module('myApp', [
                 controller: function ($scope, $interval, sockService) {
                     let value = null;
                     let btn = document.querySelector('.send-btn');
+                    let exitBtn = document.querySelector('.exit');
                     let input = document.querySelector('.text');
                     let content = document.querySelector('.content');
 
                     $interval(() => {
                         sockService.deferred.then(res => {
                             let div = document.createElement('div');
-                            let text;
+                            div.classList.add('greeting');
                             res = res.pop();
-                            try {
-                                text = JSON.parse(res);
+                            let text = res;
+
+                            if (res.welcomeMsg) {
+                                if (text) {
+                                    $scope.users = text.users;
+                                    div.innerHTML = text.welcomeMsg;
+                                    content.appendChild(div);
+                                }
+                            } else if (res.user) {
                                 let domStr = `
                                     <div class="user-details">
                                         <span class="username"></span>
@@ -35,14 +43,14 @@ angular.module('myApp', [
                                     div.querySelector('.time').innerHTML = time;
                                     div.querySelector('.msg').innerHTML = text.content;
                                 }
-                            } catch (e) {
-                                text = res;
+                            } else if (res.disconnectMsg) {
                                 if (text) {
-                                    div.innerHTML = text;
+                                    $scope.users = text.users;
+                                    let time = text.time.replace(/(\d{2}:\d{2}:\d{2}).+/, '$1');
+                                    div.innerHTML = text.disconnectMsg + ' ' + time;
                                     content.appendChild(div);
                                 }
                             }
-                            // console.log(text);
 
                             input.onkeyup = (e) => {
                                 if (e.keyCode == 13) {
@@ -54,9 +62,11 @@ angular.module('myApp', [
                             };
                         });
                     }, 1000);
-
+                    $scope.exit = () => {
+                        sockService.ws.close();
+                    };
                     function sendDataToBackend(input) {
-                        sockService.ws.send({ value: input.value });
+                        sockService.ws.send(JSON.stringify({ value: input.value }));
                         input.value = '';
                     }
                 }
@@ -66,13 +76,13 @@ angular.module('myApp', [
         $scope.login = () => {
             sendMsg();
         };
-        function sendMsg(){
+        function sendMsg() {
             $scope.isHide = true;
             let name = document.getElementById('username').value;
-            sockService.ws.send({ name: name });
+            sockService.ws.send(JSON.stringify({ name: name }));
         }
-        $scope.enter = (e)=>{
-            if(e.keyCode == 13){
+        $scope.enter = (e) => {
+            if (e.keyCode == 13) {
                 sendMsg();
             }
         };
