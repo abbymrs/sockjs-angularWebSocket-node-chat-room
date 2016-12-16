@@ -64,8 +64,16 @@ angular.module('myApp', [
     })
     .controller('mainCtrl', function ($scope, $interval, sockService) {
         $scope.login = () => {
+            sendMsg();
+        };
+        function sendMsg(){
             $scope.isHide = true;
             let name = document.getElementById('username').value;
             sockService.ws.send({ name: name });
+        }
+        $scope.enter = (e)=>{
+            if(e.keyCode == 13){
+                sendMsg();
+            }
         };
     })

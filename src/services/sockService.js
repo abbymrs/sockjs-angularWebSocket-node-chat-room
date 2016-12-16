@@ -2,7 +2,7 @@ angular.module('service.sock', [
     'ngWebSocket'
 ])
     .factory('sockService', function ($q, $websocket) {
-        const wsUrl = 'ws://localhost:3000/echo/websocket';
+        const wsUrl = 'ws://127.0.0.1:3000/echo/websocket';
         let result = [];
         let deferred = $q.defer();
 

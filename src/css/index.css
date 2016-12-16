@@ -11,6 +11,8 @@
 
 .content {
     min-height: 200px;
+    max-height: 400px;
+    overflow: auto;
     padding: 20px;
 }
 

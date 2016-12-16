@@ -10,7 +10,7 @@
 <body ng-app="myApp" ng-controller="mainCtrl">
     <div class="container">
         <div class="login" ng-show="!isHide">
-            <input type="text" name="username" id="username" placeholder="pls enter your name">
+            <input type="text" name="username" id="username" placeholder="pls enter your name" ng-keyup="enter($event)">
             <a ui-sref="home" ng-click="login()" class="btn primary-btn a-btn">
                 Login
             </a>
