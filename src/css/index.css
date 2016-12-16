@@ -11,15 +11,19 @@
 .fl{
     float: left;
 }
+.fr{
+    float: right;
+}
 .container {
     margin-top: 100px;
-    /*width: 800px;*/
+    width: 900px;
 }
 
 .chat-wrap {
     box-shadow: 1px 3px 10px rgba(0, 0, 0, .3);
     border: 1px solid #ddd;
     border-radius: 5px;
+    width: 80%;
 }
 
 .content {
@@ -73,10 +77,24 @@
     list-style: none;
     max-height: 450px;
     overflow: auto;
-    margin-left: 50px;
-    padding: 0 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    -webkit-padding-start: 0;
+    width: 17%;
 }
 .online-users li{
-    height: 30px;
-    line-height: 30px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    text-align: center;
+}
+.online-users li:last-child{
+    border-bottom: 0;
+}
+.online-users li:hover{
+    background-color: #acf;
+}
+.exit{
+    margin-bottom: 25px;
+    text-align: right;
 }

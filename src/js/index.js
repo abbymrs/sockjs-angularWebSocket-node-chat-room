@@ -20,14 +20,13 @@ angular.module('myApp', [
                             div.classList.add('greeting');
                             res = res.pop();
                             let text = res;
-
-                            if (res.welcomeMsg) {
+                            if (res && res.welcomeMsg) {
                                 if (text) {
                                     $scope.users = text.users;
                                     div.innerHTML = text.welcomeMsg;
                                     content.appendChild(div);
                                 }
-                            } else if (res.user) {
+                            } else if (res && res.user) {
                                 let domStr = `
                                     <div class="user-details">
                                         <span class="username"></span>
@@ -43,7 +42,7 @@ angular.module('myApp', [
                                     div.querySelector('.time').innerHTML = time;
                                     div.querySelector('.msg').innerHTML = text.content;
                                 }
-                            } else if (res.disconnectMsg) {
+                            } else if (res && res.disconnectMsg) {
                                 if (text) {
                                     $scope.users = text.users;
                                     let time = text.time.replace(/(\d{2}:\d{2}:\d{2}).+/, '$1');
@@ -64,6 +63,7 @@ angular.module('myApp', [
                     }, 1000);
                     $scope.exit = () => {
                         sockService.ws.close();
+                        location.reload();
                     };
                     function sendDataToBackend(input) {
                         sockService.ws.send(JSON.stringify({ value: input.value }));
@@ -72,7 +72,7 @@ angular.module('myApp', [
                 }
             })
     })
-    .controller('mainCtrl', function ($scope, $interval, sockService) {
+    .controller('mainCtrl', function ($scope, $state, sockService) {
         $scope.login = () => {
             sendMsg();
         };
@@ -84,6 +84,7 @@ angular.module('myApp', [
         $scope.enter = (e) => {
             if (e.keyCode == 13) {
                 sendMsg();
+                $state.go('home');
             }
         };
     })

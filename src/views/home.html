@@ -1,5 +1,5 @@
 <div class="exit">
-    <input type="button" value="退出" ng-click="exit()">
+    <input type="button" class="btn btn-danger" value="退出" ng-click="exit()">
 </div>
 <div class="chat-wrap fl">
     <div class="content"></div>
@@ -8,6 +8,6 @@
         <input type="button" value="发送" class="btn btn-primary send-btn">
     </div>
 </div>
-<ul class="online-users fl">
+<ul class="online-users fr">
     <li ng-repeat="user in users track by $index">{{user}}</li>
 </ul>
