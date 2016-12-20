@@ -20,14 +20,15 @@ let users = [];
 let sock = sockjs.createServer();
 sock.on('connection', conn => {
 
-    connections.push(conn);
-    let number = connections.length;
+    connections.push(conn); // add new connection to connections list
+    let number = connections.length; // specify the connected number when has new connection
     users.push(number);
     conn.on('data', msg => {
         msg = JSON.parse(msg);
-        if (msg.name) {  
+        if (msg.name) {
+            // login
             let newUser;
-            users[number - 1] = msg.name;
+            users[number - 1] = msg.name; // change new connected number to user name which user submit when login
             newUser = users[number - 1];
             // console.log(users);
             let data = {
@@ -35,9 +36,10 @@ sock.on('connection', conn => {
                 users: users
             };
             for (let i = 0; i < connections.length; i++) {
-                connections[i].write(JSON.stringify(data));
+                connections[i].write(JSON.stringify(data)); // send the new user is online to all connection users
             }
         } else {
+            // chat messages
             for (let i = 0; i < connections.length; i++) {
                 let data = {
                     user: users[number - 1],
@@ -51,6 +53,7 @@ sock.on('connection', conn => {
 
     });
     conn.on('close', () => {
+        // when the user is offline, remove this user from users list
         user = users.splice(number-1,1);
         for (let i = 0; i < connections.length; i++) {
             let data = {
@@ -58,9 +61,9 @@ sock.on('connection', conn => {
                 time: new Date().toTimeString(),
                 users: users
             };
-            connections[i].write(JSON.stringify(data));
+            connections[i].write(JSON.stringify(data)); // tell all the online users that this user is offline
         }
-        connections.splice(number-1,1);
+        connections.splice(number-1,1); // remove this connection from connections list
     });
     conn.on('error', (e) => {
         console.log(e);
